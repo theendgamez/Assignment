@@ -2,8 +2,14 @@
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <!-- Define Persistence Unit -->
     <persistence-unit name="my_persistence_unit">
-                <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/theiairline?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+        <class>THEiAirlineEntity.Passenger</class>
+        
+         <class>THEiAirlineEntity.Trip</class>
+         
+         <class>THEiAirlineEntity.PaymentRecord</class>
+         
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/theiairline?useSSL=false"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="steve"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

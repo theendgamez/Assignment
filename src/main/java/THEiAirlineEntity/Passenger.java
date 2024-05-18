@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "passenger")
 public class Passenger implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,8 +37,20 @@ public class Passenger implements Serializable {
     @Column(name = "id_number", nullable = false, unique = true)
     private String idNumber;
 
-    // Getters and Setters
+    @ManyToOne
+    @JoinColumn(name = "trip_id_fk")
+    private Trip trip;
 
+    // Getter and setter for the trip field
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
