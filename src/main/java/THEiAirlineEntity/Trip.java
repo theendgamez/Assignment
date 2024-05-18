@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 public class Trip implements Serializable {
 
-   @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -43,14 +43,9 @@ public class Trip implements Serializable {
     }
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL)
-    private List<Passenger> passengers;
-
-    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL)
     private List<PaymentRecord> paymentRecords;
 
-    
     // Constructors, getters, and setters
-
     public Long getId() {
         return id;
     }
@@ -81,14 +76,6 @@ public class Trip implements Serializable {
 
     public void setPaymentOverdueFlag(boolean paymentOverdueFlag) {
         this.paymentOverdueFlag = paymentOverdueFlag;
-    }
-
-    public List<Passenger> getPassengers() {
-        return passengers;
-    }
-
-    public void setPassengers(List<Passenger> passengers) {
-        this.passengers = passengers;
     }
 
     public List<PaymentRecord> getPaymentRecords() {

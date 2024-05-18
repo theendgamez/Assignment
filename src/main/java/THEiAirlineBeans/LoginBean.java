@@ -36,7 +36,7 @@ public class LoginBean implements Serializable {
 
     public String getPassword() { // Corrected getter name
         return password;
-    }
+    }  
 
     public void setPassword(String password) { // Corrected setter name
         this.password = password;

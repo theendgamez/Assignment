@@ -1,36 +1,38 @@
 package THEiAirlineBeans;
 
 import THEiAirlineEntity.Passenger;
-import THEiAirlineEntity.PassengerManager;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *
+ * @author lamyu
+ */
 @Named
 @RequestScoped
 public class PassengerController implements Serializable {
 
-    @Inject
-    private PassengerManager passengerManager;
+    private List<Passenger> passengers = new ArrayList<>();
     private Passenger passenger = new Passenger();
     private boolean passengerAdded; // Boolean property to indicate if passenger is added
-    
-    public boolean isPassengerAdded() {
-        return passengerAdded;
-    }
 
-    public void setPassengerAdded(boolean passengerAdded) {
-        this.passengerAdded = passengerAdded;
-    }
-       public void createPassenger() {
-        passengerManager.createPassenger(passenger);
+    // Method to create a new passenger
+    public void createPassenger() {
+        passengers.add(passenger);
         passengerAdded = true; // Set passengerAdded to true after successful addition
         passenger = new Passenger(); // Reset the passenger for the next entry
     }
 
+
+
+    public List<Passenger> getAllPassengers() {
+        return passengers;
+    }
+
+    // Getter and Setter for the current passenger
     public Passenger getPassenger() {
         return passenger;
     }
@@ -39,19 +41,12 @@ public class PassengerController implements Serializable {
         this.passenger = passenger;
     }
 
-    public void updatePassenger(Passenger passenger) {
-        passengerManager.updatePassenger(passenger);
+    // Getter and Setter for passengerAdded
+    public boolean isPassengerAdded() {
+        return passengerAdded;
     }
 
-    public void deletePassenger(Long id) {
-        passengerManager.deletePassenger(id);
-    }
-
-    public Passenger findPassenger(Long id) {
-        return passengerManager.findPassenger(id);
-    }
-
-    public List<Passenger> getAllPassengers() {
-        return passengerManager.getAllPassengers();
+    public void setPassengerAdded(boolean passengerAdded) {
+        this.passengerAdded = passengerAdded;
     }
 }

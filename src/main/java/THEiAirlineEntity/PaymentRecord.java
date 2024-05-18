@@ -13,12 +13,29 @@ import java.util.Date;
  * @author lamyu
  */
 @Entity
+@Table(name = "PaymentRecord")
 public class PaymentRecord implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "payment_date", nullable = false)
+    private Date paymentDate;
+
+    @Column(name = "amount_paid", nullable = false)
+    private double amountPaid;
+
+    @ManyToOne
+    @JoinColumn(name = "trip_id_fk", nullable = false)
+    private Trip trip;
+
+    @ManyToOne
+    @JoinColumn(name = "passenger_id_fk", nullable = false)
+    private Passenger passenger;
+
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -35,6 +52,14 @@ public class PaymentRecord implements Serializable {
         this.paymentDate = paymentDate;
     }
 
+    public double getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(double amountPaid) {
+        this.amountPaid = amountPaid;
+    }
+
     public Trip getTrip() {
         return trip;
     }
@@ -43,15 +68,11 @@ public class PaymentRecord implements Serializable {
         this.trip = trip;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "payment_date", nullable = false)
-    private Date paymentDate;
+    public Passenger getPassenger() {
+        return passenger;
+    }
 
-    @Column(name = "amount_paid", nullable = false)
-    private double amountPaid;
-
-    @ManyToOne
-    @JoinColumn(name = "trip_id", nullable = false)
-    private Trip trip;
-
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
 }

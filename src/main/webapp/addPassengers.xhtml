@@ -3,44 +3,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-    <title>Add Passenger</title>
-</h:head>
-<h:body>
-    <h:form>
-        <h1>Add New Passenger</h1>
-        
-        <h:panelGrid columns="2">
-            <h:outputLabel for="firstName" value="First Name:" />
-            <h:inputText id="firstName" value="#{passengerController.passenger.firstName}" required="true"/>
-            
-            <h:outputLabel for="lastName" value="Last Name:" />
-            <h:inputText id="lastName" value="#{passengerController.passenger.lastName}" required="true"/>
-            
-            <h:outputLabel for="title" value="Title:" />
-            <h:selectOneMenu id="title" value="#{passengerController.passenger.title}" required="true">
-                <f:selectItem itemLabel="Select" itemValue="" />
-                <f:selectItem itemLabel="MR" itemValue="MR" />
-                <f:selectItem itemLabel="MS" itemValue="MS" />
-                <f:selectItem itemLabel="MRS" itemValue="MRS" />
-                <f:selectItem itemLabel="MSTR" itemValue="MSTR" />
-                <f:selectItem itemLabel="MISS" itemValue="MISS" />
-            </h:selectOneMenu>
-            
-            <h:outputLabel for="phoneNumber" value="Phone Number:" />
-            <h:inputText id="phoneNumber" value="#{passengerController.passenger.phoneNumber}" required="true"/>
-            
-            <h:outputLabel for="email" value="Email:" />
-            <h:inputText id="email" value="#{passengerController.passenger.email}" required="true"/>
-            
-            <h:outputLabel for="idNumber" value="ID Number:" />
-            <h:inputText id="idNumber" value="#{passengerController.passenger.idNumber}" required="true"/>
-        </h:panelGrid>
-        
-        <h:commandButton value="Add Passenger" action="#{passengerController.createPassenger}"/>
-    </h:form>
-    <h:outputText value="Passenger added successfully!" rendered="#{passengerController.passengerAdded}" />
+    <h:head>
+        <title>Add Passenger</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1>Add New Passenger</h1>
 
-</h:body>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="firstName" value="First Name:" />
+                <h:inputText id="firstName" value="#{passengerController.passenger.firstName}" required="true"/>
+
+                <h:outputLabel for="lastName" value="Last Name:" />
+                <h:inputText id="lastName" value="#{passengerController.passenger.lastName}" required="true"/>
+
+                <h:outputLabel for="title" value="Title:" />
+                <h:selectOneMenu id="title" value="#{passengerController.passenger.title}" required="true">
+                    <f:selectItem itemLabel="Select" itemValue="" />
+                    <f:selectItem itemLabel="MR" itemValue="MR" />
+                    <f:selectItem itemLabel="MS" itemValue="MS" />
+                    <f:selectItem itemLabel="MRS" itemValue="MRS" />
+                    <f:selectItem itemLabel="MSTR" itemValue="MSTR" />
+                    <f:selectItem itemLabel="MISS" itemValue="MISS" />
+                </h:selectOneMenu>
+
+                <h:inputText id="phoneNumber" value="#{passengerController.passenger.phoneNumber}" required="true">
+                    <f:validateLongRange minimum="10000000" maximum="9999999999"/> <!-- Adjust range as needed -->
+                </h:inputText>
+
+                <h:inputText id="email" value="#{passengerController.passenger.email}" required="true">
+                    <f:validateRegex pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$" />
+                </h:inputText>
+
+                <h:outputLabel for="idNumber" value="ID Number:" />
+                <h:inputText id="idNumber" value="#{passengerController.passenger.idNumber}" required="true"/>
+            </h:panelGrid>
+
+            <h:commandButton value="Add Passenger" action="#{passengerController.createPassenger}"/>
+        </h:form>
+        <h:outputText value="Passenger added successfully!" rendered="#{passengerController.passengerAdded}" />
+
+    </h:body>
 </html>
 

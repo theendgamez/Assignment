@@ -1,9 +1,0 @@
-THEiAirlineEntity\PassengerManager.class
-THEiAirlineEntity\Passenger.class
-com\mycompany\theiairline\dit5307\assignment\JAXRSConfiguration.class
-THEiAirlineEntity\PaymentRecord.class
-THEiAirlineEntity\Trip.class
-THEiAirlineBeans\LoginBean.class
-com\mycompany\theiairline\dit5307\assignment\resources\JavaEE8Resource.class
-DBconnecter\dBConnection.class
-THEiAirlineBeans\PassengerController.class
