@@ -102,4 +102,5 @@ public class Trip implements Serializable {
     public int getPassengerIdFk() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }

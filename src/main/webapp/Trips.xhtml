@@ -55,13 +55,13 @@
                 
               
                 <h:outputLabel for="paymentRecords" value="Payment Records" />
-                <h:selectOneMenu value="#{tripsBeans.paymentType}" styleClass="input-field">
+                <h:selectOneMenu value="#{paymentrecord.paymentType}" styleClass="input-field">
                     <f:selectItem itemValue="Full" itemLabel="Full Payment"/>
                     <f:selectItem itemValue="Installment" itemLabel="Installment"/>
                 </h:selectOneMenu>
-                <h:panelGroup rendered="#{tripsBeans.paymentType == 'Installment'}">
+                <h:panelGroup rendered="#{paymentrecord.paymentType == 'Installment'}">
                     <h:outputLabel value="Installment Amount" for="installmentAmount" styleClass="label"/>
-                    <h:inputText id="installmentAmount" value="#{tripsBeans.installmentAmount}" styleClass="input-field"/>
+                    <h:inputText id="installmentAmount" value="#{paymentrecord.installmentAmount}" styleClass="input-field"/>
                 </h:panelGroup>
             </h:panelGrid>
             <h:commandButton value="Next" action="#{tripsBeans.navigateToConfirmation}" styleClass="btn"/>

@@ -1,21 +1,12 @@
 package THEiAirlineEntity;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
-/**
- *
- * @author lamyu
- */
 @Entity
 @Table(name = "passenger")
 public class Passenger implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,14 +33,9 @@ public class Passenger implements Serializable {
     @JoinColumn(name = "trip_id_fk")
     private Trip trip;
 
-    // Getter and setter for the trip field
-    public Trip getTrip() {
-        return trip;
-    }
-
-    public void setTrip(Trip trip) {
-        this.trip = trip;
-    }
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "payment_id_fk")
+    private List<PaymentRecord> paymentRecords; // Changed to a list
 
     // Getters and Setters
     public Long getId() {
@@ -92,7 +78,7 @@ public class Passenger implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmail() {  
+    public String getEmail() {
         return email;
     }
 
@@ -106,5 +92,21 @@ public class Passenger implements Serializable {
 
     public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
+
+    public List<PaymentRecord> getPaymentRecords() {
+        return paymentRecords;
+    }
+
+    public void setPaymentRecords(List<PaymentRecord> paymentRecords) {
+        this.paymentRecords = paymentRecords;
     }
 }
