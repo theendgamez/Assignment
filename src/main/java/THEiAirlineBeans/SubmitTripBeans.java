@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package THEiAirlineBeans;
 
 import THEiAirlineEntity.Passenger;
@@ -13,15 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.inject.Inject;
 
-/**
- *
- * @author lamyu
- */
 @Named(value = "submitTripBeans")
 @SessionScoped
 public class SubmitTripBeans implements Serializable {
-
-    private String paymentType; // "Full" or "Installment"
     private double installmentAmount;
 
     @Inject
@@ -34,22 +24,36 @@ public class SubmitTripBeans implements Serializable {
     private PaymentManager paymentManager;
 
     public void submit() {
-        Trip trip = tripsBeans.getTrip(); // Get the trip from TripsBeans
+        try {
+            Trip trip = tripsBeans.getTrip();
+            Passenger passenger = passengerManager.getPassenger();
+            trip.setPassenger(passenger);
 
-        Passenger passenger = passengerManager.getPassenger();
-        trip.setPassenger(passenger);
+            PaymentRecord paymentRecord = new PaymentRecord();
+            paymentRecord.setTrip(trip);
+            paymentRecord.setPaymentDate(new Date());
 
-        PaymentRecord paymentRecord = new PaymentRecord();
-        paymentRecord.setTrip(trip);
-        paymentRecord.setPaymentDate(new Date());
+            String paymentType = paymentManager.getPaymentType();
+            if (paymentType != null && !paymentType.isEmpty()) {
+                paymentRecord.setPaymentType(paymentType);
+            } else {
+                throw new IllegalArgumentException("Payment type cannot be null or empty.");
+            }
 
-        if ("Installment".equals(paymentType)) {
-            paymentRecord.setAmountPaid(getInstallmentAmount());
-        } else {
-            paymentRecord.setAmountPaid(trip.getTotalAmount());
+            if ("Installment".equals(paymentType)) {
+                if (installmentAmount > 0) {
+                    paymentRecord.setAmountPaid(installmentAmount);
+                } else {
+                    throw new IllegalArgumentException("The installment amount must be greater than zero.");
+                }
+            } else {
+                paymentRecord.setAmountPaid(trip.getTotalAmount());
+            }
+
+            paymentManager.addPaymentRecord(paymentRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        paymentManager.addPaymentRecord(paymentRecord);
     }
 
     public double getInstallmentAmount() {
@@ -58,5 +62,9 @@ public class SubmitTripBeans implements Serializable {
 
     public void setInstallmentAmount(double installmentAmount) {
         this.installmentAmount = installmentAmount;
+    }
+
+    public String confirmation() {
+        return "confirmationPage?faces-redirect=true";
     }
 }

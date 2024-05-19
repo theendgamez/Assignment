@@ -4,23 +4,22 @@
  */
 package THEiAirlineBeans;
 
-
+import THEiAirlineEntity.PaymentRecord;
+import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import THEiAirlineEntity.PaymentRecord;
-import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-/**
- *
- * @author lamyu
- */
+
 @Named(value = "paymentManager")
 @SessionScoped
 public class PaymentManager implements Serializable {
-    private String paymentType; // "Full" or "Installment"
+
+    private String paymentType;
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
 
     public String getPaymentType() {
         return paymentType;
@@ -30,13 +29,6 @@ public class PaymentManager implements Serializable {
         this.paymentType = paymentType;
     }
 
-    private EntityManagerFactory emf;
-
-    public PaymentManager() {
-        emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-    }
-
-    // Method to add a new payment record
     public void addPaymentRecord(PaymentRecord paymentRecord) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -98,6 +90,4 @@ public class PaymentManager implements Serializable {
         }
         return paymentRecords;
     }
-    
-    
 }

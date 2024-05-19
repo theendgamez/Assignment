@@ -35,9 +35,7 @@ public class TripsBeans implements Serializable {
         }
     }
 
-    public String navigateToConfirmation() {
-        return "confirmationPage.xhtml?faces-redirect=true"; // Navigate to confirmation page
-    }
+
 
     // Getters and Setters for trip, flights, selectedFlightNumber, passengers, paymentType, and installmentAmount
     public Trip getTrip() {

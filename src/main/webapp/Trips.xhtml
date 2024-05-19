@@ -1,36 +1,35 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Trip Management</title>
+        <script type="text/javascript" src="/DIT5307-Assignment/faces/javax.faces.resource/jsf.js?ln=javax.faces&amp;stage=Development"></script>
     </h:head>
     <h:body>
         <h:form id="tripForm">
             <h2>Trip Management</h2>
             <h:panelGrid columns="2">
+
                 <h:outputLabel for="flights" value="Flights Data:" />
                 <h:selectOneMenu id="flights" value="#{loadFlightsBeans.selectedFlightNumber}">
                     <f:selectItems value="#{loadFlightsBeans.flights}" var="flight"
-                                   itemLabel="Flight Number #{flight.flightNumber} -
-                                   Departure #{flight.departureAirport} to Arrival #{flight.arrivalAirport} $:#{flight.amount}"
+                                   itemLabel="Flight Number #{flight.flightNumber} - Departure #{flight.departureAirport} to Arrival #{flight.arrivalAirport} $:#{flight.amount}"
                                    itemValue="#{flight.flightNumber}" />
                     <f:ajax render="totalAmount" />
                 </h:selectOneMenu>
-
                 <h:outputLabel for="departureDate" value="Departure Date:" />
                 <h:inputText id="departureDate" value="#{tripsBeans.trip.departureDate}" styleClass="input-field">
-                    <f:convertDateTime pattern="dd-MM-yyyy" type="date"/>
-                    <f:validator binding="#{timeBeans}"/>
+                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                    <f:validator binding="#{timeBeans}" />
                 </h:inputText>
-
                 <h:outputLabel for="firstName" value="First Name:" />
                 <h:inputText id="firstName" value="#{passengerManager.passenger.firstName}" required="true" styleClass="input-field"/>
                 <h:outputLabel for="lastName" value="Last Name:" />
                 <h:inputText id="lastName" value="#{passengerManager.passenger.lastName}" required="true" styleClass="input-field"/>
-                <h:outputLabel for="title" value="Title:" />
 
+                <h:outputLabel for="title" value="Title:" />
                 <h:selectOneMenu id="title" value="#{passengerManager.passenger.title}" required="true" styleClass="input-field">
                     <f:selectItem itemLabel="Select" itemValue="" />
                     <f:selectItem itemLabel="MR" itemValue="MR" />
@@ -42,29 +41,32 @@
 
                 <h:outputLabel for="phoneNumber" value="Phone Number:" />
                 <h:inputText id="phoneNumber" value="#{passengerManager.passenger.phoneNumber}" required="true" styleClass="input-field">
-                    <f:validateLongRange minimum="10000000" maximum="9999999999"/>
+                    <f:validateLongRange minimum="10000000" maximum="9999999999" />
                 </h:inputText>
-
                 <h:outputLabel for="email" value="Email:" />
                 <h:inputText id="email" value="#{passengerManager.passenger.email}" required="true" styleClass="input-field">
-                    <f:validateRegex pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$" />
+                    <f:validateRegex pattern="^[A-Za-z][\w.%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$" />
                 </h:inputText>
 
                 <h:outputLabel for="idNumber" value="ID Number:" />
                 <h:inputText id="idNumber" value="#{passengerManager.passenger.idNumber}" required="true" styleClass="input-field"/>
-                
-              
-                <h:outputLabel for="paymentRecords" value="Payment Records" />
-                <h:selectOneMenu value="#{paymentrecord.paymentType}" styleClass="input-field">
+                <h:outputLabel for="paymentRecords" value="Payment Records:" />
+                <h:selectOneMenu id="paymentRecords" value="#{paymentManager.paymentType}" styleClass="input-field">
                     <f:selectItem itemValue="Full" itemLabel="Full Payment"/>
                     <f:selectItem itemValue="Installment" itemLabel="Installment"/>
+                    <f:ajax render="installmentAmountDiv" />
                 </h:selectOneMenu>
-                <h:panelGroup rendered="#{paymentrecord.paymentType == 'Installment'}">
-                    <h:outputLabel value="Installment Amount" for="installmentAmount" styleClass="label"/>
-                    <h:inputText id="installmentAmount" value="#{paymentrecord.installmentAmount}" styleClass="input-field"/>
+                <h:panelGroup id="installmentAmountDiv">
+                    <h:panelGroup rendered="#{paymentManager.paymentType == 'Installment'}">
+                        <h:outputLabel value="Installment Amount:" for="installmentAmount" styleClass="label"/>
+                        <h:inputText id="installmentAmount" value="#{submitTripBeans.installmentAmount}" styleClass="input-field"/>
+                    </h:panelGroup>
                 </h:panelGroup>
+
             </h:panelGrid>
-            <h:commandButton value="Next" action="#{tripsBeans.navigateToConfirmation}" styleClass="btn"/>
+
+            <h:commandButton value="Next" action="#{submitTripBeans.confirmation}" styleClass="btn"/>
+
         </h:form>
     </h:body>
 </html>

@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>Trip Confirmation</title>
     </h:head>
@@ -35,11 +34,11 @@
                 <h:outputText value="#{passengerManager.passenger.idNumber}" />
 
                 <h:outputLabel value="Payment Type:" />
-                <h:outputText value="#{submitTripBeans.paymentType}" />
+                <h:outputText value="#{paymentManager.paymentType}" />
 
-                <h:panelGroup rendered="#{submitTripBeans.paymentType == 'Installment'}">
-                    <h:outputLabel value="Installment Amount:" />
-                    <h:outputText value="#{submitTripBeans.installmentAmount}" />
+                <h:panelGroup rendered="#{paymentManager.paymentType == 'Installment'}">
+                    <h:outputLabel for="installmentAmount" value="Installment Amount:" />
+                    <h:inputText id="installmentAmount" value="#{submitTripBeans.installmentAmount}" required="true" />
                 </h:panelGroup>
             </h:panelGrid>
             <h:commandButton value="Submit" action="#{submitTripBeans.submit}" styleClass="btn"/>

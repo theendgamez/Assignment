@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package THEiAirlineEntity;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author lamyu
- */
 @Entity
 @Table(name = "paymentrecord")
 public class PaymentRecord implements Serializable {
@@ -20,12 +12,15 @@ public class PaymentRecord implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "payment_date", nullable = false)
     private Date paymentDate;
 
     @Column(name = "amount_paid", nullable = false)
     private double amountPaid;
+
+    @Column(name = "paymentType", nullable = false)
+    private String paymentType;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "trip_id_fk", nullable = false)
@@ -58,6 +53,14 @@ public class PaymentRecord implements Serializable {
 
     public void setAmountPaid(double amountPaid) {
         this.amountPaid = amountPaid;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 
     public Trip getTrip() {
