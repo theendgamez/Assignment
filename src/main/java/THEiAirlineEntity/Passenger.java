@@ -29,14 +29,6 @@ public class Passenger implements Serializable {
     @Column(name = "id_number", nullable = false, unique = true)
     private String idNumber;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "trip_id_fk")
-    private Trip trip;
-
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "payment_id_fk")
-    private List<PaymentRecord> paymentRecords; // Changed to a list
-
     // Getters and Setters
     public Long getId() {
         return id;
@@ -94,19 +86,4 @@ public class Passenger implements Serializable {
         this.idNumber = idNumber;
     }
 
-    public Trip getTrip() {
-        return trip;
-    }
-
-    public void setTrip(Trip trip) {
-        this.trip = trip;
-    }
-
-    public List<PaymentRecord> getPaymentRecords() {
-        return paymentRecords;
-    }
-
-    public void setPaymentRecords(List<PaymentRecord> paymentRecords) {
-        this.paymentRecords = paymentRecords;
-    }
 }

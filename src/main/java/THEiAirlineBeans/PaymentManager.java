@@ -1,11 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package THEiAirlineBeans;
 
 import THEiAirlineEntity.PaymentRecord;
+import THEiAirlineEntity.Trip;
+import THEiAirlineEntity.Passenger;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -17,9 +16,13 @@ import javax.persistence.Persistence;
 @SessionScoped
 public class PaymentManager implements Serializable {
 
+    private EntityManagerFactory emf;
+
     private String paymentType;
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+    public PaymentManager() {
+        emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+    }
 
     public String getPaymentType() {
         return paymentType;
@@ -29,6 +32,28 @@ public class PaymentManager implements Serializable {
         this.paymentType = paymentType;
     }
 
+    public PaymentRecord createPayment(double amountPaid, String paymentType, Trip trip, Passenger passenger) {
+        EntityManager em = emf.createEntityManager();
+        PaymentRecord paymentRecord = new PaymentRecord();
+        try {
+            em.getTransaction().begin();
+
+            paymentRecord.setPaymentDate(new Date()); // Automatically set the current date
+            paymentRecord.setAmountPaid(amountPaid);
+            paymentRecord.setPaymentType(paymentType);
+            paymentRecord.setTrip(trip);
+            paymentRecord.setPassenger(passenger);
+
+            em.persist(paymentRecord);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+
+        return paymentRecord;
+    }
+
+    // CRUD operations
     public void addPaymentRecord(PaymentRecord paymentRecord) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -40,7 +65,6 @@ public class PaymentManager implements Serializable {
         }
     }
 
-    // Method to update an existing payment record
     public void updatePaymentRecord(PaymentRecord paymentRecord) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -52,7 +76,6 @@ public class PaymentManager implements Serializable {
         }
     }
 
-    // Method to delete a payment record
     public void deletePaymentRecord(Long paymentRecordId) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -67,7 +90,6 @@ public class PaymentManager implements Serializable {
         }
     }
 
-    // Method to retrieve a payment record by ID
     public PaymentRecord getPaymentRecordById(Long paymentRecordId) {
         EntityManager em = emf.createEntityManager();
         PaymentRecord paymentRecord = null;
@@ -79,7 +101,6 @@ public class PaymentManager implements Serializable {
         return paymentRecord;
     }
 
-    // Method to retrieve all payment records
     public List<PaymentRecord> getAllPaymentRecords() {
         EntityManager em = emf.createEntityManager();
         List<PaymentRecord> paymentRecords = null;

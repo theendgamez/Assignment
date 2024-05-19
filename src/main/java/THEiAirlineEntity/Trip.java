@@ -21,9 +21,6 @@ public class Trip implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "order_date", nullable = false)
-    private Date orderDate;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "departure_date", nullable = false)
@@ -65,14 +62,6 @@ public class Trip implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
     }
 
     public double getTotalAmount() {
