@@ -13,7 +13,7 @@ import java.util.Date;
  * @author lamyu
  */
 @Entity
-@Table(name = "PaymentRecord")
+@Table(name = "paymentrecord")
 public class PaymentRecord implements Serializable {
 
     @Id
@@ -27,7 +27,7 @@ public class PaymentRecord implements Serializable {
     @Column(name = "amount_paid", nullable = false)
     private double amountPaid;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "trip_id_fk", nullable = false)
     private Trip trip;
 

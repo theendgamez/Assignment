@@ -20,11 +20,20 @@ import javax.inject.Named;
 @Named(value = "paymentManager")
 @SessionScoped
 public class PaymentManager implements Serializable {
+    private String paymentType; // "Full" or "Installment"
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
 
     private EntityManagerFactory emf;
 
     public PaymentManager() {
-        emf = Persistence.createEntityManagerFactory("THEiAirlinePU");
+        emf = Persistence.createEntityManagerFactory("my_persistence_unit");
     }
 
     // Method to add a new payment record
@@ -89,4 +98,6 @@ public class PaymentManager implements Serializable {
         }
         return paymentRecords;
     }
+    
+    
 }

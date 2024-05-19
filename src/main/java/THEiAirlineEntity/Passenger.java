@@ -1,12 +1,13 @@
 package THEiAirlineEntity;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-
 import javax.persistence.*;
 import java.io.Serializable;
+
 /**
  *
  * @author lamyu
@@ -37,7 +38,7 @@ public class Passenger implements Serializable {
     @Column(name = "id_number", nullable = false, unique = true)
     private String idNumber;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "trip_id_fk")
     private Trip trip;
 
@@ -91,7 +92,7 @@ public class Passenger implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmail() {
+    public String getEmail() {  
         return email;
     }
 

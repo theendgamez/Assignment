@@ -14,6 +14,7 @@ import java.util.List;
  * @author lamyu
  */
 @Entity
+@Table(name = "trips")
 public class Trip implements Serializable {
 
     @Id
@@ -44,6 +45,18 @@ public class Trip implements Serializable {
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL)
     private List<PaymentRecord> paymentRecords;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "passenger_id_fk") // Assuming there's a foreign key column in the Trip table
+    private Passenger passenger;
+
+    public Passenger getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
 
     // Constructors, getters, and setters
     public Long getId() {
@@ -84,5 +97,9 @@ public class Trip implements Serializable {
 
     public void setPaymentRecords(List<PaymentRecord> paymentRecords) {
         this.paymentRecords = paymentRecords;
+    }
+
+    public int getPassengerIdFk() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
