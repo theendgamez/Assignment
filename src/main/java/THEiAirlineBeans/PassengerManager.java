@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+
 import javax.inject.Named;
 
 @Named(value = "passengerManager")

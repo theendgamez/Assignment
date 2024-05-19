@@ -6,12 +6,12 @@ package THEiAirlineBeans;
 
 import DBconnecter.dBConnection;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -20,7 +20,7 @@ import javax.faces.context.FacesContext;
  * @author lamyu
  */
 @Named(value = "loginBean")
-@SessionScoped
+@RequestScoped
 public class LoginBean implements Serializable {
 
     private String username;

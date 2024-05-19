@@ -5,7 +5,7 @@
 package THEiAirlineBeans;
 
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import THEiAirlineEntity.Flight;
 import DBconnecter.dBConnection;
+import javax.enterprise.context.SessionScoped;
+
+
 
 /**
  *

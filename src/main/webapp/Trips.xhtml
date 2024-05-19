@@ -24,6 +24,7 @@
                     <f:convertDateTime pattern="dd-MM-yyyy" />
                     <f:validator binding="#{timeBeans}" />
                 </h:inputText>
+
                 <h:outputLabel for="firstName" value="First Name:" />
                 <h:inputText id="firstName" value="#{passengerManager.passenger.firstName}" required="true" styleClass="input-field"/>
                 <h:outputLabel for="lastName" value="Last Name:" />
@@ -57,7 +58,7 @@
                     <f:ajax render="installmentAmountDiv" />
                 </h:selectOneMenu>
                 <h:panelGroup id="installmentAmountDiv">
-                    <h:panelGroup rendered="#{paymentManager.paymentType == 'Installment'}">
+                    <h:panelGroup   rendered="#{paymentManager.paymentType == 'Installment'}">
                         <h:outputLabel value="Installment Amount:" for="installmentAmount" styleClass="label"/>
                         <h:inputText id="installmentAmount" value="#{submitTripBeans.installmentAmount}" styleClass="input-field"/>
                     </h:panelGroup>

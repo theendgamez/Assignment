@@ -3,12 +3,13 @@ package THEiAirlineBeans;
 import DBconnecter.dBConnection;
 import THEiAirlineEntity.Trip;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+
 
 @Named(value = "tripsBeans")
 @SessionScoped
