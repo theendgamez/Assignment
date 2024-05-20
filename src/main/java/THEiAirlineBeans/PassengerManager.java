@@ -48,5 +48,15 @@ public class PassengerManager implements Serializable {
         return passenger;
     }
 
-    // Additional methods for read, update, and delete operations can be added here
+        public Passenger getPassengerById(Long passengerId) {
+        EntityManager em = emf.createEntityManager();
+        Passenger passenger = null;
+        try {
+            passenger = em.find(Passenger.class, passengerId);
+        } finally {
+            em.close();
+        }
+        return passenger;
+    }
+        
 }

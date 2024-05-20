@@ -1,50 +1,77 @@
 package THEiAirlineBeans;
 
-import DBconnecter.dBConnection;
-import THEiAirlineEntity.Trip;
-import javax.inject.Named;
+import THEiAirlineEntity.Passenger;
+import THEiAirlineEntity.Trips;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.annotation.PostConstruct;
+import java.util.Date;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
-
+import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 @Named(value = "tripsBeans")
 @SessionScoped
 public class TripsBeans implements Serializable {
 
-    private Trip trip;
-    @PostConstruct
-    public void init() {
-        trip = new Trip();
-    }
+    
+    private EntityManagerFactory emf;
+    private Trips trip;
 
-    public void saveTrip() {
-        try (Connection conn = dBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO trips (departure_date, total_amount, payment_overdue_flag, passenger_id_fk) VALUES (?, ?, ?, ?)")) {
-
-            // Removed the order_date setting as it's now handled by the database
-            stmt.setDate(1, new java.sql.Date(trip.getDepartureDate().getTime()));
-            stmt.setDouble(2, trip.getTotalAmount());
-            stmt.setBoolean(3, trip.isPaymentOverdueFlag());
-            stmt.setInt(4, trip.getPassengerIdFk());
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    // Getters and Setters for trip, flights, selectedFlightNumber, passengers, paymentType, and installmentAmount
-    public Trip getTrip() {
+    public Trips getTrip() {
         return trip;
     }
 
-    public void setTrip(Trip trip) {
+    public void setTrip(Trips trip) {
         this.trip = trip;
+    }
+
+    public TripsBeans() {
+        emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+        trip = new Trips(); // Initialize the Passenger property
+    }
+
+    public Trips createTrip(Date departureDate, double totalAmount, boolean paymentOverdueFlag, Passenger passenger) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        trip.setDepartureDate(departureDate);
+        trip.setTotalAmount(totalAmount);
+        trip.setPaymentOverdueFlag(paymentOverdueFlag);
+        trip.setPassenger(passenger);
+        em.persist(trip);
+        em.getTransaction().commit();
+        em.close();
+        return trip;
+    }
+
+    /**
+     * Select all trips from the database.
+     *
+     * @return A list of all trips.
+     */
+    public List<Trips> getAllTrips() {
+        EntityManager em = emf.createEntityManager();
+        List<Trips> trips = null;
+        try {
+            trips = em.createQuery("SELECT t FROM Trips t", Trips.class).getResultList();
+        } finally {
+            em.close();
+        }
+        return trips;
+    }
+
+    
+    public void updateTrips(Trips trips) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge( trips);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
 }

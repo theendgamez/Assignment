@@ -1,9 +1,10 @@
 package THEiAirlineBeans;
 
 import THEiAirlineEntity.Passenger;
-import THEiAirlineEntity.Trip;
+import THEiAirlineEntity.Trips;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 public class SubmitTripBeans implements Serializable {
 
     private double installmentAmount;
+    private Date selectedDepartureDate;
 
     @Inject
     private TripsBeans tripsBeans;
@@ -30,17 +32,16 @@ public class SubmitTripBeans implements Serializable {
 
     public void submit() {
         try {
-            Trip trip = tripsBeans.getTrip();
             Passenger passenger = passengerManager.getPassenger();
-            trip.setPassenger(passenger);
-            trip.setTotalAmount(loadFlightsBean.getSelectedFlightAmount());
-
+            Trips trip =  tripsBeans.getTrip();
+             tripsBeans.createTrip(selectedDepartureDate, installmentAmount, false, passenger);
+             
             String paymentType = paymentManager.getPaymentType();
             double amountPaid = ("Installment".equals(paymentType)) ? installmentAmount : loadFlightsBean.getSelectedFlightAmount();
+            paymentManager.createPayment(amountPaid, paymentType,  trip, passenger);
 
-            paymentManager.createPayment(amountPaid, paymentType, trip, passenger);
-
-            tripsBeans.setTrip(new Trip());
+            //reset
+            tripsBeans.setTrip(new Trips()); // Changed from setTrip to setSelectedTrip
             passengerManager.setPassenger(new Passenger());
             setInstallmentAmount(0);
             // Redirect to the welcome page on success
@@ -50,6 +51,14 @@ public class SubmitTripBeans implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Date getSelectedDepartureDate() {
+        return selectedDepartureDate;
+    }
+
+    public void setSelectedDepartureDate(Date selectedDepartureDate) {
+        this.selectedDepartureDate = selectedDepartureDate;
     }
 
     public double getInstallmentAmount() {

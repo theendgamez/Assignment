@@ -19,8 +19,9 @@
                                    itemValue="#{flight.flightNumber}" />
                     <f:ajax render="totalAmount" />
                 </h:selectOneMenu>
+                
                 <h:outputLabel for="departureDate" value="Departure Date:" />
-                <h:inputText id="departureDate" value="#{tripsBeans.trip.departureDate}" styleClass="input-field">
+                <h:inputText id="departureDate" value="#{submitTripBeans.selectedDepartureDate}" styleClass="input-field">
                     <f:convertDateTime pattern="dd-MM-yyyy" />
                     <f:validator binding="#{timeBeans}" />
                 </h:inputText>

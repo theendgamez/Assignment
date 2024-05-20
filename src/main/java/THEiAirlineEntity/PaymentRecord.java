@@ -24,7 +24,7 @@ public class PaymentRecord implements Serializable {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "trip_id_fk", nullable = false)
-    private Trip trip;
+    private Trips trip;
 
     @ManyToOne
     @JoinColumn(name = "passenger_id_fk", nullable = false)
@@ -63,11 +63,11 @@ public class PaymentRecord implements Serializable {
         this.paymentType = paymentType;
     }
 
-    public Trip getTrip() {
+    public Trips getTrip() {
         return trip;
     }
 
-    public void setTrip(Trip trip) {
+    public void setTrip(Trips trip) {
         this.trip = trip;
     }
 

@@ -1,7 +1,7 @@
 package THEiAirlineBeans;
 
 import THEiAirlineEntity.PaymentRecord;
-import THEiAirlineEntity.Trip;
+import THEiAirlineEntity.Trips;
 import THEiAirlineEntity.Passenger;
 import java.io.Serializable;
 import java.util.Date;
@@ -32,7 +32,7 @@ public class PaymentManager implements Serializable {
         this.paymentType = paymentType;
     }
 
-    public PaymentRecord createPayment(double amountPaid, String paymentType, Trip trip, Passenger passenger) {
+    public PaymentRecord createPayment(double amountPaid, String paymentType, Trips trip, Passenger passenger) {
         EntityManager em = emf.createEntityManager();
         PaymentRecord paymentRecord = new PaymentRecord();
         try {
@@ -51,18 +51,6 @@ public class PaymentManager implements Serializable {
         }
 
         return paymentRecord;
-    }
-
-    // CRUD operations
-    public void addPaymentRecord(PaymentRecord paymentRecord) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(paymentRecord);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
     }
 
     public void updatePaymentRecord(PaymentRecord paymentRecord) {

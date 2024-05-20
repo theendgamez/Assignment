@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title> Trip View </title>
+    </h:head>
+    <h:body>
+        <h2>Trips List</h2>
+        <h:form>
+            <h:dataTable value="#{tripsBeans.getAllTrips()}" var="trip" border="1">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{trip.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Departure Date</f:facet>
+                        #{trip.departureDate}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Total Amount</f:facet>
+                        #{trip.totalAmount}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Payment Overdue</f:facet>
+                        #{trip.paymentOverdueFlag ? 'Yes' : 'No'}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Passenger ID</f:facet>
+                    #{trip.passenger.id} <!-- Assuming passenger has an id property -->
+                </h:column>
+                <!-- Add more columns as needed -->
+            </h:dataTable>
+            <h:commandButton value="Back" action="welcome.xhtml" />
+        </h:form>
+    </h:body>
+</html>

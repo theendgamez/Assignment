@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -20,7 +20,7 @@ import javax.faces.context.FacesContext;
  * @author lamyu
  */
 @Named(value = "loginBean")
-@RequestScoped
+@SessionScoped
 public class LoginBean implements Serializable {
 
     private String username;

@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "trips")
-public class Trip implements Serializable {
+public class Trips implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +44,7 @@ public class Trip implements Serializable {
     private List<PaymentRecord> paymentRecords;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "passenger_id_fk") // Assuming there's a foreign key column in the Trip table
+    @JoinColumn(name = "passenger_id_fk") // Assuming there's a foreign key column in the Trips table
     private Passenger passenger;
 
     public Passenger getPassenger() {
